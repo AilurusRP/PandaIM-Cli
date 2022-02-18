@@ -25,21 +25,19 @@ async function getLoginInfo(): Promise<LoginInfo> {
 }
 
 function loginReqConfig(loginInfo: LoginInfo): Object {
-    console.log(JSON.stringify(loginInfo));
     return {
         method: 'POST',
+        url: 'http://127.0.0.1:3080/login',
         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
+            'Content-Type': "application/json",
         },
-        body: JSON.stringify(loginInfo),
+        data: JSON.stringify(loginInfo),
     };
 }
 
 async function login() {
-    let res = await axios(
-        'http://127.0.0.1:3080/login',
-        loginReqConfig(await getLoginInfo()),
-    );
+    let conf = loginReqConfig(await getLoginInfo());
+    let res = await axios(conf);
     console.log(res.data);
 }
 

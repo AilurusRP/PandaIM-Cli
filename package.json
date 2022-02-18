@@ -14,8 +14,7 @@
     "@types/readline-sync": "^1.4.4",
     "axios": "^0.26.0",
     "eventsource": "^1.1.0",
-    "inquirer": "^8.2.0",
-    "readline-sync": "^1.4.10"
+    "inquirer": "^8.2.0"
   },
   "devDependencies": {
     "@types/eventsource": "^1.1.8",

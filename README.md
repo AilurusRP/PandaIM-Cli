@@ -1,1 +1,1 @@
-A PandaIM client for comment line.
+A PandaIM client for command line.

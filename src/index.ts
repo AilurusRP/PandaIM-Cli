@@ -4,21 +4,11 @@ import { post } from "./request.js";
 import { LoginInfo, LoginResponse, LoginReqConfig } from "./interfaces";
 
 async function getLoginInfo(): Promise<LoginInfo> {
-    let info = await inquirer.prompt([
-        {
-            name: "uname",
-            message: "Your USERNAME: ",
-        },
-        {
-            type: "password",
-            name: "passwd",
-            message: "Your PASSWORD: ",
-        },
+    const info = await inquirer.prompt([
+        { name: "uname", message: "Your USERNAME: " },
+        { type: "password", name: "passwd", message: "Your PASSWORD: " },
     ]);
-    return {
-        uname: info.uname,
-        passwd: info.passwd,
-    };
+    return { uname: info.uname, passwd: info.passwd };
 }
 
 function loginReqConfig(loginInfo: LoginInfo): LoginReqConfig {
@@ -34,10 +24,7 @@ function loginReqConfig(loginInfo: LoginInfo): LoginReqConfig {
     };
 }
 
-async function login() {
-    let info = await getLoginInfo();
-    let conf = loginReqConfig(info);
-    const res: LoginResponse = await post(conf, JSON.stringify(info));
+async function handleResponse(res: LoginResponse) {
     if (res.success === true) {
         await setCookie("token", res.token);
         console.log(await getCookie("token"));
@@ -46,6 +33,12 @@ async function login() {
     } else {
         console.log(res);
     }
+}
+
+async function login() {
+    const info = await getLoginInfo();
+    const conf = loginReqConfig(info);
+    handleResponse(await post(conf, JSON.stringify(info)));
 }
 
 function main() {
